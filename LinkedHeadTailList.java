@@ -28,10 +28,38 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
   }
 
   public T removeFront() {
+    if (head != null) {
+      Node temp = head;
+      head = head.next;
+      numberOfElements--;
+      if (numberOfElements == 0) {
+        tail = null;
+      }
+      return temp.data;
+    }
     return null;
   }
 
   public T removeBack() {
+    if (numberOfElements == 1) {
+      head = null;
+      Node temp = tail;
+      tail = null;
+      numberOfElements--;
+      return temp.data;
+    } else if (numberOfElements > 1) {
+      Node currentNode = head;
+      int index = 0;
+      while (index < numberOfElements - 2) {
+        currentNode = currentNode.next;
+        index++;
+      }
+      Node temp = currentNode.next;
+      currentNode.next = null;
+      numberOfElements--;
+      tail = currentNode;
+      return temp.data;
+    }
     return null;
   }
 
@@ -42,6 +70,17 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
   }
 
   public T getEntry(int givenPosition) {
+    if (givenPosition == numberOfElements - 1) {
+      return tail.data;
+    } else if (givenPosition >= 0 && givenPosition < numberOfElements-1) {
+      Node currentNode = head;
+      int index = 0;
+      while (index < numberOfElements-1) {
+        if (index == givenPosition) return currentNode.data;
+        currentNode = currentNode.next;
+        index++;
+      }
+    }
     return null;
   }
 
