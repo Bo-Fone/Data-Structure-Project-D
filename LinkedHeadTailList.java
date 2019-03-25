@@ -9,22 +9,67 @@
  */
 public class LinkedHeadTailList<T extends Comparable<? super T>>
     implements HeadTailListInterface<T>, Comparable<LinkedHeadTailList<T>> {
-
+  // Instance Variables
   private Node head, tail;
+  private boolean initialized = false;
   private int numberOfElements;
 
+  /**
+   * The default constructor initializes the list with no content.
+   */
   public LinkedHeadTailList() {
-    head = null;
-    tail = null;
+    head = new Node<>(null);
+    tail = head;
+    initialized = true;
     numberOfElements = 0;
   }
 
-  public void addFront(T newEntry) {
-
+  /**
+   * The regular constructor takes an array of generic objects to start with. Note
+   * that the original order of the array elements is unchanged. This constructor
+   * can be used as an array to LinkedHeadTailLIst converter.
+   *
+   * @param array Receives an array of T to initialize.
+   */
+  public LinkedHeadTailList(T[] array) {
+    this();
+    for (int i = 0; i < array.length; i++) {
+      addBack(array[i]);
+    }
   }
 
-  public void addBack(T newEntry) {
+  /**
+   * Adds a new entry to the beginning of the list. Entries currently in the list
+   * are shifted down. The list's size is increased by 1.
+   *
+   * @param newEntry The object to be added as a new entry.
+   */
+  public void addFront(T newEntry) {
+    checkInitialization();
+    if (head.getData() == null) {
+      head.setData(newEntry);
+    } else {
+      head = new Node<>(newEntry, head);
+    }
+    numberOfElements++;
+  }
 
+  /**
+   * Append a new entry to the end of the list. Entries currently in the list are
+   * unchanged. The list's size is increased by 1.
+   *
+   * @param newEntry The object to be added as a new entry.
+   */
+  public void addBack(T newEntry) {
+    checkInitialization();
+    if (tail.getData() == null) {
+      tail.setData(newEntry);
+    } else {
+      Node newNode = new Node<>(newEntry);
+      tail.setNextNode(newNode);
+      tail = newNode;
+    }
+    numberOfElements++;
   }
 
   public T removeFront() {
@@ -36,8 +81,8 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
   }
 
   public void clear() {
-    head = null;
-    tail = null;
+    head = new Node<>(null);
+    tail = head;
     numberOfElements = 0;
   }
 
@@ -62,6 +107,19 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
 
   public int compareTo(LinkedHeadTailList<T> otherList) {
     return 0;
+  }
+
+  // Helper Methods
+
+  /**
+   * Checks if the object is correctly initialized.
+   *
+   * @throws SecurityException if it is not properly initialized.
+   */
+  private void checkInitialization() {
+    if (!initialized) {
+      throw new SecurityException("ArrayHeadTailListInterface object is not initialized properly.");
+    }
   }
 
   private class Node {
