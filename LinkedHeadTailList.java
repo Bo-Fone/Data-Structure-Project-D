@@ -18,7 +18,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
    * The default constructor initializes the list with no content.
    */
   public LinkedHeadTailList() {
-    head = new Node<>(null);
+    head = new Node(null);
     tail = head;
     initialized = true;
     numberOfElements = 0;
@@ -49,7 +49,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     if (head.getData() == null) {
       head.setData(newEntry);
     } else {
-      head = new Node<>(newEntry, head);
+      head = new Node(newEntry, head);
     }
     numberOfElements++;
   }
@@ -65,7 +65,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     if (tail.getData() == null) {
       tail.setData(newEntry);
     } else {
-      Node newNode = new Node<>(newEntry);
+      Node newNode = new Node(newEntry);
       tail.setNextNode(newNode);
       tail = newNode;
     }
@@ -111,7 +111,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
   }
 
   public void clear() {
-    head = new Node<>(null);
+    head = new Node(null);
     tail = head;
     numberOfElements = 0;
   }
