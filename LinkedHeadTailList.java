@@ -132,10 +132,34 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
   }
 
   public void display() {
+    Node currentNode = head;
+    System.out.print("[");
+	if (isEmpty()) {
+        System.out.print("]");
+    } else {
+        System.out.print(currentNode.data);
+        currentNode = currentNode.next;
+        while (currentNode != null) {
+            System.out.print(", " + currentNode.data);
+            currentNode = currentNode.next;
+        }
+        System.out.printf("]	head=%s	tail=%s", head.data, tail.data);
+    }
   }
 
   public int contains(T anEntry) {
-    return -1;
+    Node currentNode = head;
+    int index = 0;
+
+    while (currentNode != null) {
+        if (currentNode.data.equals(anEntry)) {
+            return index;
+        } else {
+            currentNode = currentNode.next;
+            index++;
+        }
+    }
+	return -1;
   }
 
   public int size() {
