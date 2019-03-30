@@ -111,12 +111,14 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
   }
 
   public void clear() {
+    checkInitialization();
     head = new Node(null);
     tail = head;
     numberOfElements = 0;
   }
 
   public T getEntry(int givenPosition) {
+    checkInitialization();
     if (givenPosition == numberOfElements - 1) {
       return tail.data;
     } else if (givenPosition >= 0 && givenPosition < numberOfElements-1) {
@@ -132,9 +134,10 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
   }
 
   public void display() {
+    checkInitialization();
     Node currentNode = head;
     System.out.print("[");
-	if (isEmpty()) {
+	  if (isEmpty()) {
         System.out.print("]");
     } else {
         System.out.print(currentNode.data);
@@ -143,11 +146,12 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
             System.out.print(", " + currentNode.data);
             currentNode = currentNode.next;
         }
-        System.out.printf("]	head=%s	tail=%s", head.data, tail.data);
+        System.out.printf("]\thead=%s\ttail=%s", head.data, tail.data);
     }
   }
 
   public int contains(T anEntry) {
+    checkInitialization();
     Node currentNode = head;
     int index = 0;
 
@@ -159,14 +163,16 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
             index++;
         }
     }
-	return -1;
+	  return -1;
   }
 
   public int size() {
+    checkInitialization();
     return numberOfElements;
   }
 
   public boolean isEmpty() {
+    checkInitialization();
     return numberOfElements == 0;
   }
 
