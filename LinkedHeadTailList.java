@@ -18,10 +18,10 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
    * The default constructor initializes the list with no content.
    */
   public LinkedHeadTailList() {
-    head = new Node(null);
+    head = null;
     tail = head;
-    initialized = true;
     numberOfElements = 0;
+    initialized = true;
   }
 
   /**
@@ -112,7 +112,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
 
   public void clear() {
     checkInitialization();
-    head = new Node(null);
+    head = null;
     tail = head;
     numberOfElements = 0;
   }
