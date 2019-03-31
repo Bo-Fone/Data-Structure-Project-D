@@ -19,7 +19,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
    */
   public LinkedHeadTailList() {
     head = null;
-    tail = head;
+    tail = null;
     numberOfElements = 0;
     initialized = true;
   }
@@ -46,7 +46,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
    */
   public void addFront(T newEntry) {
     checkInitialization();
-    if (head == null && tail == null) {
+    if (head == null) {
       head = new Node(newEntry);
       tail = head;
     } else {
@@ -63,7 +63,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
    */
   public void addBack(T newEntry) {
     checkInitialization();
-    if (tail == null && tail == null) {
+    if (tail == null) {
       tail = new Node(newEntry);
       head = tail;
     } else {
@@ -76,7 +76,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
 
   /**
    * Remove the front entry from the list. The list's size is decreased by 1.
-   * 
+   *
    * @return the removed entry, or null if nothing to remove.
    */
   public T removeFront() {
@@ -95,7 +95,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
 
   /**
    * Remove the last entry from the list. The list's size is decreased by 1.
-   * 
+   *
    * @return the removed entry, or null if nothing to remove.
    */
   public T removeBack() {
@@ -128,13 +128,13 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
   public void clear() {
     checkInitialization();
     head = null;
-    tail = head;
+    tail = null;
     numberOfElements = 0;
   }
 
   /**
    * Access the entry at the given position.
-   * 
+   *
    * @param givenPosition Receives the position index.
    * @return the entry at the given position, or null if given position is not
    *         found.
@@ -164,7 +164,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     Node currentNode = head;
     System.out.print("[");
     if (isEmpty()) {
-      System.out.print("]");
+      System.out.print("]\n");
     } else {
       System.out.print(currentNode.data);
       currentNode = currentNode.next;
@@ -172,13 +172,13 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
         System.out.print(", " + currentNode.data);
         currentNode = currentNode.next;
       }
-      System.out.printf("]\thead=%s\ttail=%s", head.data, tail.data);
+      System.out.printf("]\thead=%s\ttail=%s\n", head.data, tail.data);
     }
   }
 
   /**
    * Checks if the list contains the given entry.
-   * 
+   *
    * @param anEntry Receives the entry to check.
    * @return the index of the found entry or -1 if the list does not contains the
    *         given entry.
@@ -201,7 +201,7 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
 
   /**
    * Access the current number of entries in the list.
-   * 
+   *
    * @return the number of entries.
    */
   public int size() {
@@ -211,41 +211,47 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
 
   /**
    * Checks to see if the list is empty and initialized.
-   * 
+   *
    * @return true if it is empty, or false if not.
    */
   public boolean isEmpty() {
     checkInitialization();
     return numberOfElements == 0;
   }
-  
+
   /**
    * Compares this list to another specified list element-by-element.
    * At the first element that doesn't match, lists are compared by that element.
    * If there are no mismatched elements, and the end of one or both lists is reached,
    * comparison is based on list size.
-   * 
+   *
    * @param otherList The specified list to be compared.
    * @return A negative integer, zero, or a positive integer if this list is smaller than,
    * 		 logically identical to, or larger than the specified list, respectively.
    */
   public int compareTo(LinkedHeadTailList<T> otherList) {
+    checkInitialization();
     Node currNodeThis = head;
-	Node currNodeOther = otherList.head;
-	while (currNodeThis !=null && currNodeOther != null) {
+	  Node currNodeOther = otherList.head;
+	  while (currNodeThis !=null && currNodeOther != null) {
       if (!currNodeThis.data.equals(currNodeOther.data)) {
         return currNodeThis.data.compareTo(currNodeOther.data);
       }
       currNodeThis = currNodeThis.next;
       currNodeOther = currNodeOther.next;
     }
-	if (currNodeThis == null && currNodeOther != null) {
+    if (currNodeThis == null && currNodeOther != null) {
       return -1;
-	} else if (currNodeThis != null && currNodeOther == null) {
+    } else if (currNodeThis != null && currNodeOther == null) {
       return 1;
-	} else {
+    } else {
       return 0;
-	}
+    }
+    // if (currNodeThis == null && currNodeOther == null) {
+    //   return 0;
+    // } else {
+    //   return numberOfElements - otherList.numberOfElements;
+    // }
   }
 
   // Helper Methods
