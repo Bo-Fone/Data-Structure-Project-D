@@ -46,8 +46,9 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
    */
   public void addFront(T newEntry) {
     checkInitialization();
-    if (head.getData() == null) {
-      head.setData(newEntry);
+    if (head == null && tail == null) {
+      head = new Node(newEntry);
+      tail = head;
     } else {
       head = new Node(newEntry, head);
     }
@@ -62,16 +63,22 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
    */
   public void addBack(T newEntry) {
     checkInitialization();
-    if (tail.getData() == null) {
-      tail.setData(newEntry);
+    if (tail == null && tail == null) {
+      tail = new Node(newEntry);
+      head = tail;
     } else {
       Node newNode = new Node(newEntry);
-      tail.setNextNode(newNode);
+      tail.next = newNode;
       tail = newNode;
     }
     numberOfElements++;
   }
 
+  /**
+   * Remove the front entry from the list. The list's size is decreased by 1.
+   * 
+   * @return the removed entry, or null if nothing to remove.
+   */
   public T removeFront() {
     checkInitialization();
     if (head != null) {
@@ -86,6 +93,11 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     return null;
   }
 
+  /**
+   * Remove the last entry from the list. The list's size is decreased by 1.
+   * 
+   * @return the removed entry, or null if nothing to remove.
+   */
   public T removeBack() {
     checkInitialization();
     if (numberOfElements == 1) {
@@ -110,6 +122,9 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     return null;
   }
 
+  /**
+   * Clears the entire list.
+   */
   public void clear() {
     checkInitialization();
     head = null;
@@ -117,15 +132,23 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     numberOfElements = 0;
   }
 
+  /**
+   * Access the entry at the given position.
+   * 
+   * @param givenPosition Receives the position index.
+   * @return the entry at the given position, or null if given position is not
+   *         found.
+   */
   public T getEntry(int givenPosition) {
     checkInitialization();
     if (givenPosition == numberOfElements - 1) {
       return tail.data;
-    } else if (givenPosition >= 0 && givenPosition < numberOfElements-1) {
+    } else if (givenPosition >= 0 && givenPosition < numberOfElements - 1) {
       Node currentNode = head;
       int index = 0;
-      while (index < numberOfElements-1) {
-        if (index == givenPosition) return currentNode.data;
+      while (index < numberOfElements - 1) {
+        if (index == givenPosition)
+          return currentNode.data;
         currentNode = currentNode.next;
         index++;
       }
@@ -133,44 +156,64 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     return null;
   }
 
+  /**
+   * Displays the entire list in the form of "[A,B,C,D] head = a tail = D".
+   */
   public void display() {
     checkInitialization();
     Node currentNode = head;
     System.out.print("[");
-	  if (isEmpty()) {
-        System.out.print("]");
+    if (isEmpty()) {
+      System.out.print("]");
     } else {
-        System.out.print(currentNode.data);
+      System.out.print(currentNode.data);
+      currentNode = currentNode.next;
+      while (currentNode != null) {
+        System.out.print(", " + currentNode.data);
         currentNode = currentNode.next;
-        while (currentNode != null) {
-            System.out.print(", " + currentNode.data);
-            currentNode = currentNode.next;
-        }
-        System.out.printf("]\thead=%s\ttail=%s", head.data, tail.data);
+      }
+      System.out.printf("]\thead=%s\ttail=%s", head.data, tail.data);
     }
   }
 
+  /**
+   * Checks if the list contains the given entry.
+   * 
+   * @param anEntry Receives the entry to check.
+   * @return the index of the found entry or -1 if the list does not contains the
+   *         given entry.
+   */
   public int contains(T anEntry) {
     checkInitialization();
     Node currentNode = head;
     int index = 0;
 
     while (currentNode != null) {
-        if (currentNode.data.equals(anEntry)) {
-            return index;
-        } else {
-            currentNode = currentNode.next;
-            index++;
-        }
+      if (currentNode.data.equals(anEntry)) {
+        return index;
+      } else {
+        currentNode = currentNode.next;
+        index++;
+      }
     }
-	  return -1;
+    return -1;
   }
 
+  /**
+   * Access the current number of entries in the list.
+   * 
+   * @return the number of entries.
+   */
   public int size() {
     checkInitialization();
     return numberOfElements;
   }
 
+  /**
+   * Checks to see if the list is empty and initialized.
+   * 
+   * @return true if it is empty, or false if not.
+   */
   public boolean isEmpty() {
     checkInitialization();
     return numberOfElements == 0;
@@ -193,6 +236,9 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     }
   }
 
+  /**
+   * Private class to hold the data and chain them together.
+   */
   private class Node {
     private T data; // Entry in list
     private Node next; // Link to next node
