@@ -218,9 +218,34 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     checkInitialization();
     return numberOfElements == 0;
   }
-
+  
+  /**
+   * Compares this list to another specified list element-by-element.
+   * At the first element that doesn't match, lists are compared by that element.
+   * If there are no mismatched elements, and the end of one or both lists is reached,
+   * comparison is based on list size.
+   * 
+   * @param otherList The specified list to be compared.
+   * @return A negative integer, zero, or a positive integer if this list is smaller than,
+   * 		 logically identical to, or larger than the specified list, respectively.
+   */
   public int compareTo(LinkedHeadTailList<T> otherList) {
-    return 0;
+    Node currNodeThis = head;
+	Node currNodeOther = otherList.head;
+	while (currNodeThis !=null && currNodeOther != null) {
+      if (!currNodeThis.data.equals(currNodeOther.data)) {
+        return currNodeThis.data.compareTo(currNodeOther.data);
+      }
+      currNodeThis = currNodeThis.next;
+      currNodeOther = currNodeOther.next;
+    }
+	if (currNodeThis == null && currNodeOther != null) {
+      return -1;
+	} else if (currNodeThis != null && currNodeOther == null) {
+      return 1;
+	} else {
+      return 0;
+	}
   }
 
   // Helper Methods
