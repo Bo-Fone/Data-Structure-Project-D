@@ -240,18 +240,11 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
       currNodeThis = currNodeThis.next;
       currNodeOther = currNodeOther.next;
     }
-    if (currNodeThis == null && currNodeOther != null) {
-      return -1;
-    } else if (currNodeThis != null && currNodeOther == null) {
-      return 1;
-    } else {
+    if (currNodeThis == null && currNodeOther == null) {
       return 0;
+    } else {
+      return numberOfElements - otherList.numberOfElements;
     }
-    // if (currNodeThis == null && currNodeOther == null) {
-    //   return 0;
-    // } else {
-    //   return numberOfElements - otherList.numberOfElements;
-    // }
   }
 
   // Helper Methods
