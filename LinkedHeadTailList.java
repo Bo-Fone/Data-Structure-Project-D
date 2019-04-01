@@ -233,12 +233,14 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
     checkInitialization();
     Node currNodeThis = head;
 	  Node currNodeOther = otherList.head;
-	  while (currNodeThis !=null && currNodeOther != null) {
-      if (!currNodeThis.data.equals(currNodeOther.data)) {
-        return currNodeThis.data.compareTo(currNodeOther.data);
+	  while (currNodeThis != null && currNodeOther != null) {
+      int check = currNodeThis.data.compareTo(currNodeOther.data);
+      if (check != 0) {
+        return check;
+      } else {
+        currNodeThis = currNodeThis.next;
+        currNodeOther = currNodeOther.next;
       }
-      currNodeThis = currNodeThis.next;
-      currNodeOther = currNodeOther.next;
     }
     if (currNodeThis == null && currNodeOther == null) {
       return 0;
