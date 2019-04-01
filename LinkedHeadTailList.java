@@ -147,10 +147,12 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
       Node currentNode = head;
       int index = 0;
       while (index < numberOfElements - 1) {
-        if (index == givenPosition)
+        if (index == givenPosition) {
           return currentNode.data;
-        currentNode = currentNode.next;
-        index++;
+        } else {
+          currentNode = currentNode.next;
+          index++;
+        }
       }
     }
     return null;
