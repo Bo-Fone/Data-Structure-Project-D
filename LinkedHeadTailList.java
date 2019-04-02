@@ -46,13 +46,15 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
    */
   public void addFront(T newEntry) {
     checkInitialization();
-    if (head == null) {
-      head = new Node(newEntry);
-      tail = head;
-    } else {
-      head = new Node(newEntry, head);
+    if (newEntry != null) {
+      if (head == null) {
+        head = new Node(newEntry);
+        tail = head;
+      } else {
+        head = new Node(newEntry, head);
+      }
+      numberOfElements++;
     }
-    numberOfElements++;
   }
 
   /**
@@ -63,15 +65,17 @@ public class LinkedHeadTailList<T extends Comparable<? super T>>
    */
   public void addBack(T newEntry) {
     checkInitialization();
-    if (tail == null) {
-      tail = new Node(newEntry);
-      head = tail;
-    } else {
-      Node newNode = new Node(newEntry);
-      tail.next = newNode;
-      tail = newNode;
+    if (newEntry != null) {
+      if (tail == null) {
+        tail = new Node(newEntry);
+        head = tail;
+      } else {
+        Node newNode = new Node(newEntry);
+        tail.next = newNode;
+        tail = newNode;
+      }
+      numberOfElements++;
     }
-    numberOfElements++;
   }
 
   /**
